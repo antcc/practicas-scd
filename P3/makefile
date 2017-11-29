@@ -1,17 +1,11 @@
 .SUFFIXES:
-.PHONY:    pc,pc2,pcm,fp,f,fi,fc,clean
+.PHONY:    pc,f,fi,fc,clean
 
 compilador := mpicxx -std=c++11
 flagsc     := -g -Wall
 
-pc: prodcons_exe
-	mpirun -np  3 ./$<
-
-pc2: prodcons2_exe
-	mpirun -np  3 ./$<
-
-pcm: prodcons2-mu_exe
-	mpirun -np  10 ./$<
+pc: prodcons_varios_exe
+	mpirun -np 10 ./$<
 
 fp: filosofos-plantilla_exe
 	mpirun -np 10 ./$<
