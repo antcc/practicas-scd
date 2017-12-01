@@ -13,7 +13,6 @@
 //
 // -----------------------------------------------------------------------------
 
-
 #include <iostream>
 #include <thread>
 #include <random>
@@ -23,7 +22,6 @@
 using namespace std;
 using namespace std::this_thread;
 using namespace std::chrono;
-
 
 //**********************************************************************
 // Variables globales
@@ -46,7 +44,6 @@ const int
    etiq_productor  = 0,
    etiq_consumidor = 1;
 
-
 //**********************************************************************
 // Plantilla de función para generar un entero aleatorio uniformemente
 // distribuido en el rango [min,max]
@@ -58,7 +55,6 @@ template< int min, int max > int aleatorio()
   static uniform_int_distribution<int> distribucion_uniforme( min, max ) ;
   return distribucion_uniforme( generador );
 }
-
 
 //**********************************************************************
 // Produce los números en secuencia (1,2,3,...), y conlleva retraso
@@ -75,7 +71,6 @@ int producir( int num_productor )
    return contador;
 }
 
-
 //**********************************************************************
 // Consume un dato (lo imprime), y conlleva retraso aleatorio
 //----------------------------------------------------------------------
@@ -86,7 +81,6 @@ void consumir( int valor_cons, int num_consumidor )
    cout << "\t\tConsumidor " << num_consumidor << " ha consumido: " << valor_cons
         << endl << flush;
 }
-
 
 //**********************************************************************
 // Funciones que implementan el paso de mensajes
@@ -173,7 +167,6 @@ void funcion_buffer()
       }
    }
 }
-
 
 //**********************************************************************
 // Main
