@@ -209,7 +209,6 @@ int main( int argc, char *argv[] )
       {
         cout << "error: el número de procesos esperados es " << num_procesos_esperado
              << ", pero el número de procesos en ejecución es " << num_procesos_actual << endl;
-        return 1;
       }
    }
 
