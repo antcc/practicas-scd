@@ -3,12 +3,12 @@
 // Sistemas concurrentes y Distribuidos.
 // Práctica 3. Implementación de algoritmos distribuidos con MPI
 //
-// Archivo: filosofos-interb.cpp
+// Archivo: filosofos.cpp
 // Implementación del problema de los filósofos.
 //
-// Existe la posibilidad de interbloqueo. Esto ocurre cuando todos los filófilosofos
-// cogen el tenedor de su izquierda, sin que ninguno haya intentado aún coger el de
-// su derecha.
+// En esta versión se garantiza que no habrá interbloqueo. Para ello,
+// basta con que un filósofo coja los tenedores en el orden inverso
+// al que lo hacen los demás.
 //
 // Antonio Coín Castro
 //
@@ -66,11 +66,22 @@ void funcion_filosofos( int id )
 
   while ( true )
   {
-    cout << "Filósofo " << id << " solicita tenedor izquierdo (" << id_ten_izq << ")" << endl;
-    MPI_Ssend( &peticion, 1, MPI_INT, id_ten_izq, 0, MPI_COMM_WORLD );
+    if (id == 0) // uno de los filósofos debe comenzar al revés
+    {
+      cout << "Filósofo " << id << " solicita tenedor derecho (" << id_ten_der << ")" << endl;
+      MPI_Ssend( &peticion, 1, MPI_INT, id_ten_der, 0, MPI_COMM_WORLD );
 
-    cout << "Filósofo " << id << " solicita tenedor derecho (" << id_ten_der << ")" << endl;
-    MPI_Ssend( &peticion, 1, MPI_INT, id_ten_der, 0, MPI_COMM_WORLD );
+      cout << "Filósofo " << id << " solicita tenedor izquierdo (" << id_ten_izq << ")" << endl;
+      MPI_Ssend( &peticion, 1, MPI_INT, id_ten_izq, 0, MPI_COMM_WORLD );
+    }
+    else
+    {
+      cout << "Filósofo " << id << " solicita tenedor izquierdo (" << id_ten_izq << ")" << endl;
+      MPI_Ssend( &peticion, 1, MPI_INT, id_ten_izq, 0, MPI_COMM_WORLD );
+
+      cout << "Filósofo " << id << " solicita tenedor derecho (" << id_ten_der << ")" << endl;
+      MPI_Ssend( &peticion, 1, MPI_INT, id_ten_der, 0, MPI_COMM_WORLD );
+    }
 
     retraso_aleatorio("comienza a comer", id);
 
