@@ -19,7 +19,6 @@
 #include <random>
 #include <chrono>
 #include <iostream>
-#include <signal.h>  // signal handler
 
 using namespace std;
 using namespace std::this_thread;
@@ -33,8 +32,8 @@ using namespace std::chrono;
 
 const int
    num_filosofos = 5,
-   num_procesos_esperados  = 2 * num_filosofos + 1,  // Un tenedor por cada filósofo, y un camarero
-   num_procesos_efectivos = 2 * num_filosofos,
+   num_procesos_efectivos = 2 * num_filosofos, // un tenedor por cada filósofo
+   num_procesos_esperados  = num_procesos_efectivos + 1,  // Hay un camarero
    id_camarero = num_procesos_efectivos;
 
 // Etiquetas MPI
