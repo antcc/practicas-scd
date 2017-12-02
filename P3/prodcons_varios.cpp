@@ -36,7 +36,8 @@ const int
    num_items             = 100,
    tam_vector            = 40,
    items_por_productor   = num_items / np,
-   items_por_consumidor  = num_items / nc;
+   items_por_consumidor  = num_items / nc,
+   id_buffer             = np;
 
 // Etiquetas MPI
 
@@ -92,10 +93,10 @@ void funcion_productor( int num_productor )
    {
       // producir valor
       int valor_prod = producir( num_productor );
-      // enviar valor (id_buffer = np)
+      // enviar valor
       cout << "Productor " << num_productor << " va a enviar: " << valor_prod
            << endl << flush;
-      MPI_Ssend( &valor_prod, 1, MPI_INT, np, etiq_productor, MPI_COMM_WORLD );
+      MPI_Ssend( &valor_prod, 1, MPI_INT, id_buffer, etiq_productor, MPI_COMM_WORLD );
    }
 }
 
@@ -109,10 +110,10 @@ void funcion_consumidor( int num_consumidor )
 
    for( unsigned i = 0 ; i < items_por_consumidor ; i++ )
    {
-      // enviar petición (id_buffer = np)
-      MPI_Ssend( &peticion, 1, MPI_INT, np, etiq_consumidor, MPI_COMM_WORLD );
+      // enviar petición
+      MPI_Ssend( &peticion, 1, MPI_INT, id_buffer, etiq_consumidor, MPI_COMM_WORLD );
       // recibir y consumir dato
-      MPI_Recv ( &valor_rec, 1, MPI_INT, np, etiq_productor, MPI_COMM_WORLD, &estado );
+      MPI_Recv ( &valor_rec, 1, MPI_INT, id_buffer, etiq_productor, MPI_COMM_WORLD, &estado );
       cout << "\t\tConsumidor " << num_consumidor << " ha recibido: " << valor_rec
            << endl << flush;
       consumir( valor_rec, num_consumidor );
@@ -133,7 +134,7 @@ void funcion_buffer()
 
    for( unsigned i = 0 ; i < num_items * 2 ; i++ )
    {
-      // 1. determinar si puede enviar solo productores, solo consumidores, o todos
+      // 1. Determinar si puede enviar solo productores, solo consumidores, o todos
 
       if ( num_celdas_ocupadas == 0 )               // si buffer vacío
          etiqueta_aceptable = etiq_productor;       // $~~~$ solo prod.
@@ -142,11 +143,11 @@ void funcion_buffer()
       else                                          // si no vacío ni lleno
          etiqueta_aceptable = MPI_ANY_TAG;          // $~~~$ cualquiera
 
-      // 2. recibir un mensaje con etiqueta aceptable
+      // 2. Recibir un mensaje con etiqueta aceptable
 
       MPI_Recv( &valor, 1, MPI_INT, MPI_ANY_SOURCE, etiqueta_aceptable, MPI_COMM_WORLD, &estado );
 
-      // 3. procesar el mensaje recibido
+      // 3. Procesar el mensaje recibido
 
       switch( estado.MPI_TAG ) // leer etiqueta del mensaje en metadatos
       {
@@ -190,14 +191,14 @@ int main( int argc, char *argv[] )
    if ( num_procesos_esperado == num_procesos_actual )
    {
      /**
-      * Productores: 0,1,...,np - 1
-      * Buffer: np
-      * Consumidores: np + 1, np + 2, ..., np + nc - 1
+      * Productores: 0,1,...,id_buffer - 1
+      * Buffer: id_buffer
+      * Consumidores: id_buffer + 1, id_buffer + 2, ..., id_buffer + nc - 1
       */
 
-      if ( id_propio < np )
+      if ( id_propio < id_buffer )
          funcion_productor( id_propio );
-      else if ( id_propio == np )
+      else if ( id_propio == id_buffer )
          funcion_buffer();
       else
          funcion_consumidor( id_propio );

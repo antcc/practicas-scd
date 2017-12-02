@@ -117,7 +117,7 @@ void funcion_tenedores( int id )
 }
 
 //**********************************************************************
-// Funciones que implementan el paso de mensajes
+// Main
 //----------------------------------------------------------------------
 
 int main( int argc, char** argv )
@@ -144,6 +144,6 @@ int main( int argc, char** argv )
       }
    }
 
-   MPI_Finalize( );
+   MPI_Finalize();
    return 0;
 }
