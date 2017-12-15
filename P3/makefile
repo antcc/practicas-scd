@@ -7,6 +7,9 @@ flagsc     := -g -Wall
 pc: prodcons_varios_exe
 	mpirun -np 10 ./$<
 
+pcm: prodcons_varios_modos_exe
+	mpirun -np 10 ./$<
+
 fp: filosofos-plantilla_exe
 	mpirun -np 10 ./$<
 
