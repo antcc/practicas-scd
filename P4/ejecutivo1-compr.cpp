@@ -94,6 +94,13 @@ int main( int argc, char *argv[] )
 
          // esperar hasta el inicio de la siguiente iteración del ciclo secundario
          sleep_until( ini_sec );
+
+         // informar del retraso actual sufrido en cada ciclo secundario
+         milliseconds_f retraso_ms = steady_clock::now() - ini_sec;
+         cout<< "Retraso de " << retraso_ms.count() << " ms" << endl;
+
+         if (retraso_ms > milliseconds(20))
+          exit(1);
       }
    }
 }

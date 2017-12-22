@@ -1,17 +1,8 @@
 .SUFFIXES:
-.PHONY:    pc,pc2,pcm,fp,f,fi,fc,clean
+.PHONY:    e1c,e2,clean
 
 compilador := g++ -std=c++11
 flagsc     := -Wall
-
-r: relojes_exe
-	./$<
-
-t: tiempos_exe
-	./$<
-
-e1: ejecutivo1_exe
-	./$<
 
 e1c: ejecutivo1-compr_exe
 	./$<
