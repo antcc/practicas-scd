@@ -13,4 +13,4 @@ P3. Paso de mensajes con OpenMPI.
 
 ## extras
 
-Cálculo y representación del conjunto de Mandelbrot con OpenMPI
+Cálculo y representación del conjunto de Mandelbrot con OpenMPI.
