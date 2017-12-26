@@ -10,3 +10,4 @@ P1. Sincronización de hebras con semáforos.
 S2. Introducción a los monitores en C++11.   
 P2. Casos prácticos de monitores.  
 P3. Paso de mensajes con OpenMPI
+Mandelbrot. Cálculo y representación del conjunto de Mandelbrot con MPI
