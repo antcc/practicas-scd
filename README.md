@@ -9,5 +9,8 @@ S1. Implementación concurrente del cálculo numérico de una integral.
 P1. Sincronización de hebras con semáforos.   
 S2. Introducción a los monitores en C++11.   
 P2. Casos prácticos de monitores.  
-P3. Paso de mensajes con OpenMPI
-Mandelbrot. Cálculo y representación del conjunto de Mandelbrot con MPI
+P3. Paso de mensajes con OpenMPI.    
+
+## extras
+
+Cálculo y representación del conjunto de Mandelbrot con OpenMPI
